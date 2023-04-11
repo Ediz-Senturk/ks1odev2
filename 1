@@ -1,0 +1,39 @@
+function searchMatrix(matrix, target) {
+  // Başlangıçta sonuç satırı ve sütunu -1 olarak ayarlanır
+  let row = -1;
+  let col = -1;
+
+  // Matrisin boyutları elde edilir
+  const m = matrix.length;
+  const n = matrix[0].length;
+
+  // Başlangıçta arama konumu matrisin sol alt köşesinde
+  let i = m - 1;
+  let j = 0;
+
+  // Aranan hedef değerine ulaşılıncaya kadar döngü devam eder
+  while (i >= 0 && j < n) {
+    if (matrix[i][j] === target) {
+      row = i;
+      col = j;
+      break;
+    } else if (matrix[i][j] > target) {
+      i--;
+    } else {
+      j++;
+    }
+  }
+
+  // Sonuç satırı ve sütunu döndürülür
+  return [row, col];
+}
+
+// Örnek kullanım
+const matrix = [
+  [1, 3, 5],
+  [2, 4, 7],
+  [6, 8, 9],
+];
+const target = 4;
+const [row, col] = searchMatrix(matrix, target);
+console.log(`Sonuç satırı: ${row}, Sonuç sütunu: ${col}`);
