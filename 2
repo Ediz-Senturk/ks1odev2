@@ -1,0 +1,53 @@
+function isLinkedListPalindrome(head) {
+  // Başlangıçta listenin tamamı ters çevrilmemiş olarak kabul edilir
+  let reversed = null;
+
+  // Listenin yarısını dolaşmak için iki farklı hızda hareket eden iki işaretçi tanımlanır
+  let slow = head;
+  let fast = head;
+
+  // Hızlı işaretçi, listenin sonuna ulaşıncaya kadar ilerler ve aynı zamanda yavaş işaretçi de listenin yarısına ulaşır
+  while (fast && fast.next) {
+    fast = fast.next.next;
+
+    // Yavaş işaretçi, listenin yarısına ulaştığında, geri kalan kısmını ters çevirmek için bir dizi kullanılır
+    const next = slow.next;
+    slow.next = reversed;
+    reversed = slow;
+    slow = next;
+  }
+
+  // Listenin uzunluğuna bağlı olarak, hızlı işaretçi son elemana ulaşmamış olabilir, bu nedenle yavaş işaretçiyi bir adım ileri taşıyarak listenin yarısını geçer
+  if (fast) {
+    slow = slow.next;
+  }
+
+  // Ters çevrilmiş kısım ve yavaş işaretçinin kalan kısmı karşılaştırılır
+  while (reversed && reversed.val === slow.val) {
+    reversed = reversed.next;
+    slow = slow.next;
+  }
+
+  // Eğer iki kısım eşitse, liste palindromdur
+  return reversed === null;
+}
+
+// Örnek kullanım
+const head = {
+  val: 1,
+  next: {
+    val: 2,
+    next: {
+      val: 3,
+      next: {
+        val: 2,
+        next: {
+          val: 1,
+          next: null,
+        },
+      },
+    },
+  },
+};
+const isPalindrome = isLinkedListPalindrome(head);
+console.log(`Bu liste palindrom mu? ${isPalindrome}`);
